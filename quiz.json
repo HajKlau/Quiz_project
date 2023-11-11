@@ -1,0 +1,12 @@
+{
+    "Q1": {
+        "text": "Type of variable named 'double' can hold?",
+        "answers": [
+            "integers",
+            "strings",
+            "floating-point values",
+            "characters"
+        ],
+        "correct_answer": "characters"
+    }
+}
