@@ -37,8 +37,8 @@ c
 7. What is a constructor ?
 a) constructor has the same name as the class it belongs to
 b) constructor has not the same name as the class it belongs to
-c) Constructor is called automatically when an object is disposed of
-d) Constructor is called automatically when a class is created
+c) constructor is called automatically when an object is disposed of
+d) constructor is called automatically when a class is created
 a
 8. Which command displays the path to the current directory?
 a) pwr

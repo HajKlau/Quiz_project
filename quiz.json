@@ -1,12 +1,142 @@
 {
-    "Q1": {
+    "Q1" : {
         "text": "Type of variable named 'double' can hold?",
-        "answers": [
+        "answer" : [
             "integers",
             "strings",
             "floating-point values",
             "characters"
         ],
-        "correct_answer": "characters"
+        "correct_answer" : "characters"
+    },
+    "Q2:" : {
+        "text": "Which command initializes the local repository?",
+        "answer" : [
+            "git merge",
+            "git init",
+            "git add",
+            "git status"
+        ],
+        "correct_answer" : "git init"
+    },
+    "Q3:" : {
+        "text": "Which command shows the state of local repository?",
+        "answer" : [
+            "git merge",
+            "git init",
+            "git add",
+            "git status"
+        ],
+        "correct_answer" : "git status"
+    },
+    "Q4:" : {
+        "text": "Which command is used to view the list or details of existing committees?",
+        "answer" : [
+            "git log",
+            "git show",
+            "git config",
+            "git commit"
+        ],
+        "correct_answer" : "git log"
+    },
+    "Q5:" : {
+        "text": "Which declaration is correct?",
+        "answer" : [
+            "string = 'car';",
+            "'car' = string;",
+            "\"car\" = string;",
+            "string = \"car\";"
+        ],
+        "correct_answer" : "string = \"car\";"
+    },
+    "Q6:" : {
+        "text": "Which record is incorrect?",
+        "answer" : [
+            "int = 10",
+            "string = \"car\"",
+            "char = a",
+            "double = 3.3"
+        ],
+        "correct_answer" : "char = a"
+    },
+    "Q7:" : {
+        "text": "What is a constructor ?",
+        "answer" : [
+            "constructor has the same name as the class it belongs to",
+            "constructor has not the same name as the class it belongs to",
+            "constructor is called automatically when an object is disposed of",
+            "constructor is called automatically when a class is created"
+        ],
+        "correct_answer" : "constructor has the same name as the class it belongs to"
+    },
+    "Q8:" : {
+        "text": "Which command displays the path to the current directory?",
+        "answer" : [
+            "pwr",
+            "pwp",
+            "pwd",
+            "pwf"
+        ],
+        "correct_answer" : "pwd"
+    },
+    "Q9:" : {
+        "text": "Which command used to remove files?",
+        "answer" : [
+            "rm",
+            "cd",
+            "wc",
+            "cut"
+        ],
+        "correct_answer" : "rm"
+    },
+    "Q10:" : {
+        "text": "Which command adds execute permissions on file to all?",
+        "answer" : [
+            "chmod 500 <file>",
+            "chmod r+rw <file>",
+            "chmod -R 070 <file>",
+            "chmod a+x <file>"
+        ],
+        "correct_answer" : "chmod a+x <file>"
+    },
+    "Q11:" : {
+        "text": "Which command lets you view last 20 lines of file?",
+        "answer" : [
+            "cat 20 <file>",
+            "touch-end -number 20 <file>",
+            "endfile -n 20 <file>",
+            "tail -n 20 <file>"
+        ],
+        "correct_answer" : "tail -n 20 <file>"
+    },
+    "Q12:" : {
+        "text": "How to view contents of a file?",
+        "answer" : [
+            "cut <file>",
+            "less <file>",
+            "man <file>",
+            "cmd <file> | wc"
+        ],
+        "correct_answer" : "less <file>"
+    },
+    "Q13:" : {
+        "text": "How to connect to other machine via ssh (what is the syntax)?",
+        "answer" : [
+            "ssh-connect <ip-addr>",
+            "ssh <password> <ip-addr>",
+            "ssh <user>&&<password>+<ip-addr>",
+            "ssh <user>@<ip-addr>"
+        ],
+        "correct_answer" : "ssh <user>@<ip-addr>"
+    },
+    "Q14:" : {
+        "text": "What is curl?",
+        "answer" : [
+            "utility that lets you format strings",
+            "utility that lets you send requests ",
+            "utility that lets you manage windows in Gnome",
+            "utility to remove old log files"
+        ],
+        "correct_answer" : "utility that lets you send requests "
     }
 }
