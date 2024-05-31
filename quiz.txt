@@ -1,84 +1,84 @@
 1. Type of variable named "double" can hold?
-a) integers
-b) strings
-c) floating-point values
-d) characters
-c
+a integers
+b strings
+c floating-point values
+d characters
+floating-point values
 2. Which command initializes the local repository?
-a) git merge
-b) git init
-c) git add
-d) git status
-b
+a git merge
+b git init
+c git add
+d git status
+git init
 3. Which command shows the state of local repository?
-a) git merge
-b) git init
-c) git add
-d) git status
-d
+a git merge
+b git init
+c git add
+d git status
+git status
 4. Which command is used to view the list or details of existing committees?
-a) git log
-b) git show
-c) git config
-d) git commit
-a
+a git log
+b git show
+c git config
+d git commit
+git log
 5. Which declaration is correct?
-a) string = 'car';
-b) 'car' = string;
-c) "car" = string;
-d) string = "car";
-d
+a string = 'car';
+b 'car' = string;
+c "car" = string;
+d string = "car";
+string = "car";
 6. Which record is incorrect?
-a) int = 10
-b) string = "car"
-c) char = a
-d) double = 3.3
-c
+a int = 10
+b string = "car"
+c char = a
+d double = 3.3
+char = a
 7. What is a constructor ?
-a) constructor has the same name as the class it belongs to
-b) constructor has not the same name as the class it belongs to
-c) constructor is called automatically when an object is disposed of
-d) constructor is called automatically when a class is created
-a
+a constructor has the same name as the class it belongs to
+b constructor has not the same name as the class it belongs to
+c constructor is called automatically when an object is disposed of
+d constructor is called automatically when a class is created
+constructor has the same name as the class it belongs to
 8. Which command displays the path to the current directory?
-a) pwr
-b) pwp
-c) pwd
-d) pwf
-c
+a pwr
+b pwp
+c pwd
+d pwf
+pwd
 9. Which command used to remove files?
-a) rm
-b) cd
-c) wc
-d) cut
-a
+a rm
+b cd
+c wc
+d cut
+rm
 10. Which command adds execute permissions on file to all?
-a) chmod 500 <file>
-b) chmod r+rw <file>
-c) chmod -R 070 <file>
-d) chmod a+x <file>
-d
+a chmod 500 <file>
+b chmod r+rw <file>
+c chmod -R 070 <file>
+d chmod a+x <file>
+chmod a+x <file>
 11. Which command lets you view last 20 lines of file?
-a) cat 20 <file>
-b) touch-end -number 20 <file>
-c) endfile -n 20 <file>
-d) tail -n 20 <file>
-d
+a cat 20 <file>
+b touch-end -number 20 <file>
+c endfile -n 20 <file>
+d tail -n 20 <file>
+tail -n 20 <file>
 12. How to view contents of a file?
-a) cut <file>
-b) less <file>
-c) man <file>
-d) cmd <file> | wc
-b
+a cut <file>
+b less <file>
+c man <file>
+d cmd <file> | wc
+less <file>
 13. How to connect to other machine via ssh (what is the syntax)?
-a) ssh-connect <ip-addr>
-b) ssh <password> <ip-addr>
-c) ssh <user>&&<password>+<ip-addr>
-d) ssh <user>@<ip-addr>
-d
+a ssh-connect <ip-addr>
+b ssh <password> <ip-addr>
+c ssh <user>&&<password>+<ip-addr>
+d ssh <user>@<ip-addr>
+ssh <user>@<ip-addr>
 14. What is curl?
-a) utility that lets you format strings
-b) utility that lets you send requests 
-c) utility that lets you manage windows in Gnome
-d) utility to remove old log files
-b
+a utility that lets you format strings
+b utility that lets you send requests 
+c utility that lets you manage windows in Gnome
+d utility to remove old log files
+utility that lets you send requests 

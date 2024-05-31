@@ -6,7 +6,7 @@ Q1:
     - "strings"
     - "floating-point values"
     - "characters"
-  correct_answer: "characters"
+  correct_answer: "floating-point values"
   
 Q2:
   text: "Which command initializes the local repository?"
@@ -41,7 +41,7 @@ Q5:
     - "string = 'car';"
     - "'car' = string;"
     - "\"car\" = string;"
-    - "string = \"car\"car\";"
+    - "string = \"car\";"
   correct_answer: "string = \"car\";"
 
 Q6:

@@ -16,7 +16,9 @@ public:
     string contents, a, b, c, d, answer, correct_answer;
     int point;
     int question_number;
+     bool isTxtFormat;
 
+    string trim(const string& str);
     void load(const string& filename);
     int ask();
     void check();

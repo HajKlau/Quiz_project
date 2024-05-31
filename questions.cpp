@@ -10,10 +10,19 @@
 using namespace std;
 using json = nlohmann::json;
 
+string Question::trim(const string& str) {
+    size_t first = str.find_first_not_of(' ');
+    if (std::string::npos == first) {
+        return str;
+    }
+    size_t last = str.find_last_not_of(' ');
+    return str.substr(first, (last - first + 1));
+}
 
 void Question::load(const string& filename) {
     string extension = filename.substr(filename.find_last_of(".") + 1);
     if (extension == "txt") {
+        isTxtFormat = true; // Ustawienie flagi dla formatu TXT
         fstream file(filename, ios::in);
         if (!file.is_open()) {
             cout << "The file cannot be opened\n";
@@ -21,13 +30,16 @@ void Question::load(const string& filename) {
         }
         loadTxt(file);
         file.close();
-    } else if (extension == "json") {
-        loadJson(filename);
-    } else if (extension == "yml") {
-        loadYaml(filename);
     } else {
-        cout << "Unsupported file format\n";
-        exit(0);
+        isTxtFormat = false; // Ustawienie flagi dla formatów JSON i YAML
+        if (extension == "json") {
+            loadJson(filename);
+        } else if (extension == "yml") {
+            loadYaml(filename);
+        } else {
+            cout << "Unsupported file format\n";
+            exit(0);
+        }
     }
 }
 
@@ -37,15 +49,32 @@ void Question::loadTxt(fstream& file) {
     string line;
 
     while (getline(file, line)) {
-        if (current_number == line_number) contents = line;
-        if (current_number == line_number + 1) a = line;
-        if (current_number == line_number + 2) b = line;
-        if (current_number == line_number + 3) c = line;
-        if (current_number == line_number + 4) d = line;
-        if (current_number == line_number + 5) correct_answer = line;
+        if (current_number == line_number) {
+            size_t pos = line.find('.');
+            if (pos != string::npos) {
+                contents = line.substr(pos + 2); // Usuń numer pytania i kropkę.
+            } else {
+                contents = line; // W przypadku braku numeru, użyj całej linii.
+            }
+        }
+        if (current_number >= line_number + 1 && current_number <= line_number + 4) {
+            if (line.length() > 2) {
+                // Usuwamy prefiks odpowiedzi np. "a) ".
+                switch (current_number - line_number) {
+                    case 1: a = line.substr(line.find(')') + 2); break;
+                    case 2: b = line.substr(line.find(')') + 2); break;
+                    case 3: c = line.substr(line.find(')') + 2); break;
+                    case 4: d = line.substr(line.find(')') + 2); break;
+                }
+            }
+        }
+        if (current_number == line_number + 5) {
+            correct_answer = line;  // Bezpośrednie przypisanie litery jako odpowiedzi.
+        }
         current_number++;
     }
 }
+
 
 void Question::loadJson(const string& filename) {
     ifstream file(filename);
@@ -53,14 +82,13 @@ void Question::loadJson(const string& filename) {
     file >> j;
     string questionKey = "Q" + to_string(question_number); // Tworzymy klucz pytania
     auto q = j[questionKey]; // Używamy klucza do dostępu do pytania
-    contents = q["text"];
-    a = q["answer"][0];
-    b = q["answer"][1];
-    c = q["answer"][2];
-    d = q["answer"][3];
-    correct_answer = q["correct_answer"];
+    contents = trim(q["text"].get<std::string>());
+    a = trim(q["answer"][0].get<std::string>());
+    b = trim(q["answer"][1].get<std::string>());
+    c = trim(q["answer"][2].get<std::string>());
+    d = trim(q["answer"][3].get<std::string>());
+    correct_answer = trim(q["correct_answer"].get<std::string>());
 }
-
 
 void Question::loadYaml(const string& filename) {
     YAML::Node yaml = YAML::LoadFile(filename);
@@ -69,14 +97,13 @@ void Question::loadYaml(const string& filename) {
     if (!q) {
         throw runtime_error("Question data not found in YAML file");
     }
-    contents = q["text"].as<string>();
-    a = q["answer"][0].as<string>();
-    b = q["answer"][1].as<string>();
-    c = q["answer"][2].as<string>();
-    d = q["answer"][3].as<string>();
-    correct_answer = q["correct_answer"].as<string>();
+    contents = trim(q["text"].as<string>());
+    a = trim(q["answer"][0].as<string>());
+    b = trim(q["answer"][1].as<string>());
+    c = trim(q["answer"][2].as<string>());
+    d = trim(q["answer"][3].as<string>());
+    correct_answer = trim(q["correct_answer"].as<string>());
 }
-
 
 int Question::ask() {
     cout << endl << "Question " << question_number << ": " << contents << endl;
@@ -88,26 +115,36 @@ int Question::ask() {
     cout << "Enter your answer (a, b, c, or d): ";
     cin >> answer;
 
-    string options[4] = {"a", "b", "c", "d"};
-    int valid_answer = 0;
-    for (int i = 0; i < 4; i++) {
-        if (options[i] == answer) {
-            cout << endl << "Your answer: " << answer << endl;
-            valid_answer = 1;
-            break;
-        }
+    // Usunięcie warunku zależnego od poprawnej odpowiedzi; zawsze zwróć 1.
+    map<string, string> answer_map = {
+        {"a", a},
+        {"b", b},
+        {"c", c},
+        {"d", d}
+    };
+
+    // Przypisanie pełnego tekstu odpowiedzi niezależnie od poprawności.
+    if (answer_map.find(answer) != answer_map.end()) {
+        answer = answer_map[answer];
+    } else {
+        cout << "Invalid answer, please enter a, b, c, or d." << endl;
     }
-    if (valid_answer == 0) {
-        cout << endl << "Invalid answer, please enter a, b, c, or d." << endl;
-    }
-    return valid_answer;
+    return 1; // Zawsze zwracaj 1, aby przejść do następnego pytania
 }
 
 
 void Question::check() {
-    if (answer == correct_answer) {
+    cout << "User answer: '" << answer << "' vs Correct answer: '" << correct_answer << "'" << endl;
+    if (trim(answer) == trim(correct_answer)) {
+        cout << "Correct!" << endl;
         point = 1;
     } else {
+        cout << "Wrong! Correct answer: " << correct_answer << endl;
         point = 0;
     }
 }
+
+
+
+
+
