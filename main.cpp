@@ -1,5 +1,5 @@
-// main.cpp
 #include "questions.h"
+#include "utility.h"
 #include <iostream>
 #include <string>  // Może być potrzebne dla obsługi std::string
 

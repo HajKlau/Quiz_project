@@ -1,7 +1,4 @@
-// questions.h
-#ifndef QUESTIONS_H
-#define QUESTIONS_H
-
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -18,7 +15,6 @@ public:
     int question_number;
      bool isTxtFormat;
 
-    string trim(const string& str);
     void load(const string& filename);
     int ask();
     void check();
@@ -26,5 +22,3 @@ public:
     void loadJson(const string& filename);
     void loadYaml(const string& filename);
 };
-
-#endif // QUESTIONS_H

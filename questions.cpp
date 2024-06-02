@@ -1,5 +1,5 @@
-// questions.cpp
 #include "questions.h"
+#include "utility.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -9,15 +9,6 @@
 
 using namespace std;
 using json = nlohmann::json;
-
-string Question::trim(const string& str) {
-    size_t first = str.find_first_not_of(' ');
-    if (std::string::npos == first) {
-        return str;
-    }
-    size_t last = str.find_last_not_of(' ');
-    return str.substr(first, (last - first + 1));
-}
 
 void Question::load(const string& filename) {
     string extension = filename.substr(filename.find_last_of(".") + 1);
@@ -37,7 +28,7 @@ void Question::load(const string& filename) {
         } else if (extension == "yml") {
             loadYaml(filename);
         } else {
-            cout << "Unsupported file format\n";
+            cout << "\033[1mUnsupported file format\033[0m" << endl;
             exit(0);
         }
     }
@@ -106,16 +97,6 @@ void Question::loadYaml(const string& filename) {
 }
 
 int Question::ask() {
-    cout << endl << "Question " << question_number << ": " << contents << endl;
-    cout << "a) " << a << endl;
-    cout << "b) " << b << endl;
-    cout << "c) " << c << endl;
-    cout << "d) " << d << endl;
-    cout << "---------------------------" << endl;
-    cout << "Enter your answer (a, b, c, or d): ";
-    cin >> answer;
-
-    // Usunięcie warunku zależnego od poprawnej odpowiedzi; zawsze zwróć 1.
     map<string, string> answer_map = {
         {"a", a},
         {"b", b},
@@ -123,28 +104,33 @@ int Question::ask() {
         {"d", d}
     };
 
-    // Przypisanie pełnego tekstu odpowiedzi niezależnie od poprawności.
-    if (answer_map.find(answer) != answer_map.end()) {
-        answer = answer_map[answer];
-    } else {
-        cout << "Invalid answer, please enter a, b, c, or d." << endl;
+    while (true) {  // Pętla będzie kontynuowana, dopóki użytkownik nie poda prawidłowej odpowiedzi lub nie zdecyduje się pominąć pytania
+        cout << endl << "Question " << question_number << ": " << contents << endl;
+        cout << "a) " << a << endl;
+        cout << "b) " << b << endl;
+        cout << "c) " << c << endl;
+        cout << "d) " << d << endl;
+        cout << "---------------------------" << endl;
+        cout << "Enter your answer (a, b, c, or d): " << endl;
+        cin >> answer;
+
+        if (answer_map.find(answer) != answer_map.end()) {  // Sprawdzamy, czy odpowiedź znajduje się w mapie
+            answer = answer_map[answer];  // Przypisanie pełnego tekstu odpowiedzi
+            return 1;  // Poprawna odpowiedź, przejdź do następnego pytania
+        } else {
+            cout << "\033[1m\033[31mInvalid answer, please enter a, b, c, or d.\033[0m" << endl;
+            // Nie zwracamy 1, pętla kontynuuje i ponownie wyświetli pytanie
+        }
     }
-    return 1; // Zawsze zwracaj 1, aby przejść do następnego pytania
 }
 
-
 void Question::check() {
-    cout << "User answer: '" << answer << "' vs Correct answer: '" << correct_answer << "'" << endl;
+    
     if (trim(answer) == trim(correct_answer)) {
         cout << "Correct!" << endl;
         point = 1;
     } else {
-        cout << "Wrong! Correct answer: " << correct_answer << endl;
+     
         point = 0;
     }
 }
-
-
-
-
-

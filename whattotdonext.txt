@@ -1,0 +1,36 @@
+// how to call this programm
+
+// 1st option: 
+//      ./output --json-file <path_to_file>
+// 2nd option:
+//      ./output --yml-file <path_to_file>
+//
+// So in sum it should have two options to call compiled program (i think it can be done in cpp), options:
+// --yml-file
+// --json-file
+// after accepting this flag/param/whateveritis program should execute certain part of code depending on which param was chosen (e.g. for --json-file it should read json). Optionally you can add verification if json file was truly provided with --json-file flag (by checking file extension).
+
+load
+{
+    // open file with ifstream
+    // based on provided file type (yml/json)
+    // here you can try to unify data structure so for the rest of the program it doesnt matter if it was json or yml :)
+    // return object as data_structure with questions and answers and correct answer
+}
+
+ask
+{
+    // here simply display in a nice way question to the audience. For graphical representation you can try to use QT (its gui lib for cpp)
+}
+
+check
+{
+    // verify if answer provided is available and then if its correct; if its unavailable then repeat question; if its correct call add_point
+}
+
+add_point
+{
+    // just add point somewhere where it will persist during program madear
+}
+
+at the end of main function just show sum of points (object from add_point)
