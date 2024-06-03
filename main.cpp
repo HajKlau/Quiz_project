@@ -1,16 +1,31 @@
 #include "questions.h"
 #include "utility.h"
 #include <iostream>
-#include <string>  // Może być potrzebne dla obsługi std::string
+#include <string>
+#include <set>
 
 using namespace std;
 
 int main() {
-    cout << "Choose file format (txt, json, yml): ";
+    set<string> validFormats = {"txt", "json", "yml"};
     string format, filename;
-    cin >> format;
-    format = toLower(format);
-    filename = "quiz." + format; // Zakładamy nazwy plików quiz.txt, quiz.json, quiz.yml
+    while (true) {
+        cout << "Choose file format (txt, json, yml) or 'exit' to quit: ";
+        cin >> format;
+        format = toLower(format);
+
+        if (format == "exit") {
+            cout << "Exiting quiz." << endl;
+            return 0;  // Zakończenie programu
+        }
+
+        if (validFormats.find(format) != validFormats.end()) {
+            filename = "quiz." + format; // Zakładamy nazwy plików quiz.txt, quiz.json, quiz.yml
+            break;
+        } else {
+            cout << "Invalid file format. Please enter 'txt', 'json', or 'yml'." << endl;
+        }
+    }
 
     Question q[14];
     int sum = 0;
@@ -28,3 +43,4 @@ int main() {
 
     return 0;
 }
+

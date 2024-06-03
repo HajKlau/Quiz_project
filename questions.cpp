@@ -111,19 +111,27 @@ int Question::ask() {
         cout << "c) " << c << endl;
         cout << "d) " << d << endl;
         cout << "---------------------------" << endl;
-        cout << "Enter your answer (a, b, c, or d): " << endl;
+        cout << "Enter your answer (a, b, c, or d) or 'exit' to quit: ";
         cin >> answer;
         answer = toLower(answer);
 
-        if (answer_map.find(answer) != answer_map.end()) {  // Sprawdzamy, czy odpowiedź znajduje się w mapie
-            answer = answer_map[answer];  // Przypisanie pełnego tekstu odpowiedzi
-            return 1;  // Poprawna odpowiedź, przejdź do następnego pytania
-        } else {
-            cout << "\033[1m\033[31mInvalid answer, please enter a, b, c, or d.\033[0m" << endl;
-            // Nie zwracamy 1, pętla kontynuuje i ponownie wyświetli pytanie
+        if (answer == "exit") {
+            cout << "Exiting quiz." << endl;
+            exit(0);  // Zakończenie funkcji i powrót do wywołującej
         }
+
+        if (isValidInput(answer)) {
+            if (answer_map.find(answer) != answer_map.end()) {
+                answer = answer_map[answer];  // Przypisanie pełnego tekstu odpowiedzi
+                return 1;  // Poprawna odpowiedź, przejdź do następnego pytania
+            }
+        } 
+
+        cout << "\033[1m\033[31mInvalid answer, please enter a, b, c, or d.\033[0m" << endl;
+        // Kontynuacja pętli, ponowne wyświetlenie pytania
     }
 }
+
 
 void Question::check() {
     
