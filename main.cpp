@@ -9,6 +9,7 @@ int main() {
     cout << "Choose file format (txt, json, yml): ";
     string format, filename;
     cin >> format;
+    format = toLower(format);
     filename = "quiz." + format; // Zakładamy nazwy plików quiz.txt, quiz.json, quiz.yml
 
     Question q[14];

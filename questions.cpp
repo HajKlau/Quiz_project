@@ -113,6 +113,7 @@ int Question::ask() {
         cout << "---------------------------" << endl;
         cout << "Enter your answer (a, b, c, or d): " << endl;
         cin >> answer;
+        answer = toLower(answer);
 
         if (answer_map.find(answer) != answer_map.end()) {  // Sprawdzamy, czy odpowiedź znajduje się w mapie
             answer = answer_map[answer];  // Przypisanie pełnego tekstu odpowiedzi
