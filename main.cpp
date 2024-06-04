@@ -39,7 +39,7 @@ int main() {
         sum += q[i].point;
     }
 
-    cout << "End of quiz! Points = " << sum << endl;
+    cout << endl << "\033[32m\033[1mEnd of quiz! Points = \033[0m" << "\033[32m\033[1m" << sum << "\033[0m" << endl;
 
     return 0;
 }
