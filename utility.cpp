@@ -1,6 +1,6 @@
 #include "utility.h"
 #include <iostream>
-#include <cctype>  // dla funkcji tolower i isalnum
+#include <cctype> 
 
 std::string trim(const std::string& str) {
     size_t first = str.find_first_not_of(' ');
@@ -15,7 +15,7 @@ std::string toLower(const std::string& str) {
     std::string lowerStr;
     lowerStr.reserve(str.size());
     for (char c : str) {
-        lowerStr += std::tolower(static_cast<unsigned char>(c));  // Poprawne użycie tolower
+        lowerStr += std::tolower(static_cast<unsigned char>(c)); 
     }
     return lowerStr;
 }

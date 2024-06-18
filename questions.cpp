@@ -13,7 +13,7 @@ using json = nlohmann::json;
 void Question::load(const string& filename) {
     string extension = filename.substr(filename.find_last_of(".") + 1);
     if (extension == "txt") {
-        isTxtFormat = true; // Ustawienie flagi dla formatu TXT
+        isTxtFormat = true;
         fstream file(filename, ios::in);
         if (!file.is_open()) {
             cout << "The file cannot be opened\n";
@@ -22,7 +22,7 @@ void Question::load(const string& filename) {
         loadTxt(file);
         file.close();
     } else {
-        isTxtFormat = false; // Ustawienie flagi dla formatów JSON i YAML
+        isTxtFormat = false;
         if (extension == "json") {
             loadJson(filename);
         } else if (extension == "yml") {
@@ -43,24 +43,23 @@ void Question::loadTxt(fstream& file) {
         if (current_number == line_number) {
             size_t pos = line.find('.');
             if (pos != string::npos) {
-                contents = line.substr(pos + 2); // Usuń numer pytania i kropkę.
+                contents = line.substr(pos + 2); 
             } else {
-                contents = line; // W przypadku braku numeru, użyj całej linii.
+                contents = line;
             }
         }
         if (current_number >= line_number + 1 && current_number <= line_number + 4) {
             if (line.length() > 2) {
-                // Usuwamy prefiks odpowiedzi np. "a) ".
                 switch (current_number - line_number) {
-                    case 1: a = line.substr(line.find(')') + 2); break;
-                    case 2: b = line.substr(line.find(')') + 2); break;
-                    case 3: c = line.substr(line.find(')') + 2); break;
-                    case 4: d = line.substr(line.find(')') + 2); break;
+                    case 1: a = line.substr(2); break;  
+                    case 2: b = line.substr(2); break;  
+                    case 3: c = line.substr(2); break; 
+                    case 4: d = line.substr(2); break;
                 }
             }
         }
         if (current_number == line_number + 5) {
-            correct_answer = line;  // Bezpośrednie przypisanie litery jako odpowiedzi.
+            correct_answer = line; 
         }
         current_number++;
     }
@@ -70,16 +69,21 @@ void Question::loadTxt(fstream& file) {
 void Question::loadJson(const string& filename) {
     ifstream file(filename);
     json j;
-    file >> j;
-    string questionKey = "Q" + to_string(question_number); // Tworzymy klucz pytania
-    auto q = j[questionKey]; // Używamy klucza do dostępu do pytania
-    contents = trim(q["text"].get<std::string>());
-    a = trim(q["answer"][0].get<std::string>());
-    b = trim(q["answer"][1].get<std::string>());
-    c = trim(q["answer"][2].get<std::string>());
-    d = trim(q["answer"][3].get<std::string>());
-    correct_answer = trim(q["correct_answer"].get<std::string>());
+    file >> j;  
+    string questionKey = "Q" + to_string(question_number);  
+    if (j.contains(questionKey)) {  
+        auto q = j[questionKey];  
+        contents = trim(q["text"].get<std::string>());
+        a = trim(q["answer"][0].get<std::string>());
+        b = trim(q["answer"][1].get<std::string>());
+        c = trim(q["answer"][2].get<std::string>());
+        d = trim(q["answer"][3].get<std::string>());
+        correct_answer = trim(q["correct_answer"].get<std::string>());
+    } else {
+        throw runtime_error("Question data not found in JSON file for key " + questionKey);
+    }
 }
+
 
 void Question::loadYaml(const string& filename) {
     YAML::Node yaml = YAML::LoadFile(filename);
@@ -104,7 +108,7 @@ int Question::ask() {
         {"d", d}
     };
 
-    while (true) {  // Pętla będzie kontynuowana, dopóki użytkownik nie poda prawidłowej odpowiedzi lub nie zdecyduje się pominąć pytania
+    while (true) {  
         cout << endl << "Question " << question_number << ": " << contents << endl;
         cout << "a) " << a << endl;
         cout << "b) " << b << endl;
@@ -117,21 +121,20 @@ int Question::ask() {
 
         if (answer == "exit") {
             cout << "Exiting quiz." << endl;
-            exit(0);  // Zakończenie funkcji i powrót do wywołującej
+            exit(0);  
         }
 
         if (isValidInput(answer)) {
             if (answer_map.find(answer) != answer_map.end()) {
-                answer = answer_map[answer];  // Przypisanie pełnego tekstu odpowiedzi
-                return 1;  // Poprawna odpowiedź, przejdź do następnego pytania
+                answer = answer_map[answer];  
+                return 1;  
             }
         } 
 
-        cout << "\033[1m\033[31mInvalid answer, please enter a, b, c, or d.\033[0m" << endl;
-        // Kontynuacja pętli, ponowne wyświetlenie pytania
+        cout << endl << "\033[1m\033[31mInvalid answer, please enter a, b, c, or d.\033[0m" << endl;
+        
     }
 }
-
 
 void Question::check() {
     
