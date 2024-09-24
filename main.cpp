@@ -25,11 +25,11 @@ int main() {
 
         if (format == "exit") {
             cout << "Exiting quiz." << endl;
-            return 0;  // Zakończenie programu
+            return 0; 
         }
 
         if (formatMap.find(format) != formatMap.end()) {
-            filename = "quiz." + formatMap[format]; // Zakładamy nazwy plików quiz.txt, quiz.json, quiz.yml
+            filename = "quiz." + formatMap[format]; 
             break;
         } else {
             cout << "\033[1m\033[31mInvalid file format. Please enter '1', '2', '3' or 'exit' to quit.\033[0m" << endl;
