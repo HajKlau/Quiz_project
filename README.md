@@ -16,22 +16,32 @@ sudo apt-get install g++ cmake
 ## Building
 1. Clone the repository from GitHub:
 
-	```git clone git@github.com:HajKlau/Quiz_project.git```
+	```
+    git clone git@github.com:HajKlau/Quiz_project.git
+    ```
 
 2. Navigate to the project directory:
  
-	```cd Quiz_project```
+	```
+    cd Quiz_project
+    ```
 
 3. Create build directory:
 
-	```mkdir build```
-    ```cd build```
+	```
+    mkdir build
+    cd build
+    ```
 
 4. Compile the project:
 
-	```cmake ..```
-    ```make```
+	```
+    cmake ..
+    make
+    ```
 
 5. Run the program:
 
-	```./QuizApp```
+	```
+    ./QuizApp`
+    ``
