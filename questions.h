@@ -16,9 +16,11 @@ public:
     bool isTxtFormat;
 
     void load(const string& filename);
-    int ask();
-    void check();
     void loadTxt(fstream& file);
     void loadJson(const string& filename);
     void loadYaml(const string& filename);
+    void check();
+    int ask();
+    int runQuiz(const string& filename, int numQuestions);
+    string selectFileFormat();
 };

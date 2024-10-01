@@ -43,5 +43,5 @@ sudo apt-get install g++ cmake
 5. Run the program:
 
 	```
-    ./QuizApp`
-    ``
+    ./QuizApp
+    ```

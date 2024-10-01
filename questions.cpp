@@ -100,6 +100,54 @@ void Question::loadYaml(const string& filename) {
     correct_answer = trim(q["correct_answer"].as<string>());
 }
 
+string Question::selectFileFormat() {
+    map<string, string> formatMap = {
+        {"1", "txt"},
+        {"2", "json"},
+        {"3", "yml"}
+    };
+
+    string format;
+    while (true) {
+        cout << "Please select the file format from the list below and enter 1, 2 or 3 or 'exit' to quit: " << endl;
+        for (const auto& pair : formatMap) {
+            cout << pair.first << ". " << pair.second << endl;
+        }
+        cin >> format;
+        format = toLower(format);
+
+        if (format == "exit") {
+            cout << "Exiting quiz." << endl;
+            exit(0); 
+        }
+
+        if (formatMap.find(format) != formatMap.end()) {
+            return "quiz." + formatMap[format];
+        } else {
+            cout << "\033[1m\033[31mInvalid file format. Please enter '1', '2', '3' or 'exit' to quit.\033[0m" << endl;
+        }
+    }
+}
+
+int Question::runQuiz(const string& filename, int numQuestions) {
+    Question q[numQuestions];
+    int totalPoints = 0;
+
+    for (int i = 0; i < numQuestions; i++) {
+        q[i].question_number = i + 1;
+        q[i].load(filename);
+
+        while (!q[i].ask()) {
+            cout << "Invalid answer. Try again.\n";
+        }
+
+        q[i].check();
+        totalPoints += q[i].point;
+    }
+
+    return totalPoints;
+}
+
 int Question::ask() {
     map<string, string> answer_map = {
         {"a", a},
