@@ -23,17 +23,17 @@ c git config
 d git commit
 git log
 5. Which declaration is correct?
-a string = 'car';
-b 'car' = string;
-c "car" = string;
-d string = "car";
-string = "car";
+a string car = 'car';
+b 'car' = string car;
+c "car" = string car;
+d string car = "car";
+string car = "car";
 6. Which record is incorrect?
-a int = 10
-b string = "car"
-c char = a
-d double = 3.3
-char = a
+a int number = 10
+b string car = "car"
+c char number = a
+d double number = 3.3
+char number = a
 7. What is a constructor ?
 a constructor has the same name as the class it belongs to
 b constructor has not the same name as the class it belongs to

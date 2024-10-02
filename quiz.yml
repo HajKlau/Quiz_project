@@ -38,20 +38,20 @@ Q4:
 Q5:
   text: "Which declaration is correct?"
   answer:
-    - "string = 'car';"
-    - "'car' = string;"
-    - "\"car\" = string;"
-    - "string = \"car\";"
-  correct_answer: "string = \"car\";"
+    - "string car = 'car';"
+    - "'car' = string car;"
+    - "\"car\" = string car;"
+    - "string car = \"car\";"
+  correct_answer: "string car = \"car\";"
 
 Q6:
   text: "Which record is incorrect?"
   answer:
-    - "int = 10"
-    - "string = \"car\""
-    - "char = a"
-    - "double = 3.3"
-  correct_answer: "char = a"
+    - "int number = 10"
+    - "string car = \"car\""
+    - "char number = a"
+    - "double number = 3.3"
+  correct_answer: "char number = a"
 
 Q7:
   text: "What is a constructor ?"
