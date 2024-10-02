@@ -11,7 +11,7 @@ using namespace std;
 using json = nlohmann::json;
 
 void Question::load(const string& filename) {
-    string extension = filename.substr(filename.find_last_of(".") + 1);
+    const string& extension = filename.substr(filename.find_last_of(".") + 1);
     
     ifstream file(filename);
     if (!file.is_open()) {
@@ -78,9 +78,9 @@ void Question::loadJson(const string& filename) {
     ifstream file(filename);
     json j;
     file >> j;  
-    string questionKey = "Q" + to_string(question_number);  
-    if (j.contains(questionKey)) {  
-        auto q = j[questionKey];  
+    string question_key = "Q" + to_string(question_number);  
+    if (j.contains(question_key)) {  
+        auto q = j[question_key];  
         contents = trim(q["text"].get<std::string>());
         a = trim(q["answer"][0].get<std::string>());
         b = trim(q["answer"][1].get<std::string>());
@@ -88,7 +88,7 @@ void Question::loadJson(const string& filename) {
         d = trim(q["answer"][3].get<std::string>());
         correct_answer = trim(q["correct_answer"].get<std::string>());
     } else {
-        throw runtime_error("Question data not found in JSON file for key " + questionKey);
+        throw runtime_error("Question data not found in JSON file for key " + question_key);
     }
 
     validateQuestionData();
@@ -97,10 +97,10 @@ void Question::loadJson(const string& filename) {
 
 void Question::loadYaml(const string& filename) {
     YAML::Node yaml = YAML::LoadFile(filename);
-    string questionKey = "Q" + to_string(question_number);
-    auto q = yaml[questionKey];
+    string question_key = "Q" + to_string(question_number);
+    auto q = yaml[question_key];
     if (!q) {
-        throw runtime_error("Question data not found in YAML file for key " + questionKey);
+        throw runtime_error("Question data not found in YAML file for key " + question_key);
     }
 
     contents = trim(q["text"].as<string>());
@@ -114,7 +114,7 @@ void Question::loadYaml(const string& filename) {
 }
 
 string Question::selectFileFormat() {
-    map<string, string> formatMap = {
+    map<string, string> format_map = {
         {"1", "txt"},
         {"2", "json"},
         {"3", "yaml"}
@@ -123,7 +123,7 @@ string Question::selectFileFormat() {
     string format;
     while (true) {
         cout << "Please select the file format from the list below and enter 1, 2 or 3 or 'exit' to quit: " << endl;
-        for (const auto& pair : formatMap) {
+        for (const auto& pair : format_map) {
             cout << pair.first << ". " << pair.second << endl;
         }
         cin >> format;
@@ -134,19 +134,19 @@ string Question::selectFileFormat() {
             exit(0); 
         }
 
-        if (formatMap.find(format) != formatMap.end()) {
-            return "quiz." + formatMap[format];
+        if (format_map.find(format) != format_map.end()) {
+            return "quiz." + format_map[format];
         } else {
             cout << "\033[1m\033[31mInvalid file format. Please enter '1', '2', '3' or 'exit' to quit.\033[0m" << endl;
         }
     }
 }
 
-int Question::runQuiz(const string& filename, int numQuestions) {
-    Question q[numQuestions];
-    int totalPoints = 0;
+int Question::runQuiz(const string& filename, int num_questions) {
+    Question q[num_questions];
+    int total_points = 0;
 
-    for (int i = 0; i < numQuestions; i++) {
+    for (int i = 0; i < num_questions; i++) {
         q[i].question_number = i + 1;
         q[i].load(filename);
 
@@ -155,10 +155,10 @@ int Question::runQuiz(const string& filename, int numQuestions) {
         }
 
         q[i].check();
-        totalPoints += q[i].point;
+        total_points += q[i].point;
     }
 
-    return totalPoints;
+    return total_points;
 }
 
 int Question::ask() {

@@ -10,11 +10,11 @@ int main() {
 
     Question question;
     string filename = question.selectFileFormat();
-    const int numQuestions = 14;
+    const int num_questions = 14;
 
-    int totalPoints = question.runQuiz(filename, numQuestions);
+    int total_points = question.runQuiz(filename, num_questions);
 
-    cout << endl << "\033[32m\033[1mEnd of quiz! Points = \033[0m" << "\033[32m\033[1m" << totalPoints << "\033[0m" << endl;
+    cout << endl << "\033[32m\033[1mEnd of quiz! Points = \033[0m" << "\033[32m\033[1m" << total_points << "\033[0m" << endl;
 
     return 0;
 }

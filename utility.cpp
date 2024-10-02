@@ -2,33 +2,35 @@
 #include <iostream>
 #include <cctype> 
 
-std::string trim(const std::string& str) {
+using namespace std;
+
+string trim(const string& str) {
     size_t first = str.find_first_not_of(' ');
-    if (std::string::npos == first) {
+    if (string::npos == first) {
         return str;
     }
     size_t last = str.find_last_not_of(' ');
     return str.substr(first, (last - first + 1));
 }
 
-std::string toLower(const std::string& str) {
-    std::string lowerStr;
-    lowerStr.reserve(str.size());
+string toLower(const string& str) {
+    string lower_str;
+    lower_str.reserve(str.size());
     for (char c : str) {
-        lowerStr += std::tolower(static_cast<unsigned char>(c)); 
+        lower_str += tolower(static_cast<unsigned char>(c)); 
     }
-    return lowerStr;
+    return lower_str;
 }
 
-bool isValidInput(const std::string& input) {
+bool isValidInput(const string& input) {
     if (input.length() > 20) {
-        std::cout << "\033[1m\033[31mError: Input is too long. Maximum 20 characters allowed.\033[0m" << std::endl;
+        cout << "\033[1m\033[31mError: Input is too long. Maximum 20 characters allowed.\033[0m" << endl;
         return false;
     }
 
     for (char c : input) {
-        if (!std::isalnum(static_cast<unsigned char>(c))) {
-            std::cout << "\033[1m\033[31mError: Invalid characters detected. Only letters and digits are allowed.\033[0m" << std::endl;
+        if (!isalnum(static_cast<unsigned char>(c))) {
+            cout << "\033[1m\033[31mError: Invalid characters detected. Only letters and digits are allowed.\033[0m" << endl;
             return false;
         }
     }

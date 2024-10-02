@@ -21,7 +21,7 @@ public:
     void loadYaml(const string& filename);
     void check();
     int ask();
-    int runQuiz(const string& filename, int numQuestions);
+    int runQuiz(const string& filename, int num_questions);
     string selectFileFormat();
     void validateQuestionData();
 };
