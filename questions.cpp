@@ -13,22 +13,24 @@ using json = nlohmann::json;
 void Question::load(const string& filename) {
     const string& extension = filename.substr(filename.find_last_of(".") + 1);
 
-    ifstream file(filename);  // Otwieramy plik raz
+    ifstream file(filename); 
     if (!file.is_open()) {
         cout << "The file cannot be opened\n";
         exit(0);
     }
 
     if (extension == "txt") {
-        loadTxt(file);  // Przekazujemy strumień do funkcji loadTxt
+        loadTxt(file);  
     } else if (extension == "json") {
-        loadJson(file);  // Przekazujemy strumień do funkcji loadJson
+        loadJson(file);  
     } else if (extension == "yaml") {
-        loadYaml(file);  // Przekazujemy strumień do funkcji loadYaml
+        loadYaml(file); 
     } else {
         cout << "\033[1mUnsupported file format\033[0m" << endl;
         exit(0);
     }
+
+    validateQuestionData();
 
     file.close();
 }
@@ -68,14 +70,12 @@ void Question::loadTxt(ifstream& file) {
     if (!question_found) {
         throw runtime_error("Question not found in TXT file for question number " + to_string(question_number));
     }
-
-    validateQuestionData();
 }
 
 
 void Question::loadJson(ifstream& file) {
     json j;
-    file >> j;  // Wczytujemy dane z przekazanego strumienia
+    file >> j;  
 
     string question_key = "Q" + to_string(question_number);  
     if (j.contains(question_key)) {  
@@ -89,13 +89,10 @@ void Question::loadJson(ifstream& file) {
     } else {
         throw runtime_error("Question data not found in JSON file for key " + question_key);
     }
-
-    validateQuestionData();
 }
 
 void Question::loadYaml(ifstream& file) {
-    YAML::Node yaml = YAML::Load(file);  // Ładujemy YAML bez otwierania pliku na nowo
-
+    YAML::Node yaml = YAML::Load(file);
     string question_key = "Q" + to_string(question_number);
     auto q = yaml[question_key];
     if (!q) {
@@ -108,8 +105,6 @@ void Question::loadYaml(ifstream& file) {
     c = trim(q["answer"][2].as<string>());
     d = trim(q["answer"][3].as<string>());
     correct_answer = trim(q["correct_answer"].as<string>());
-
-    validateQuestionData();
 }
 
 string Question::selectFileFormat() {
