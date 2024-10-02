@@ -16,7 +16,7 @@ public:
     bool isTxtFormat;
 
     void load(const string& filename);
-    void loadTxt(fstream& file);
+    void loadTxt(ifstream& file);
     void loadJson(const string& filename);
     void loadYaml(const string& filename);
     void check();

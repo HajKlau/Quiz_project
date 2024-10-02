@@ -12,29 +12,29 @@ using json = nlohmann::json;
 
 void Question::load(const string& filename) {
     string extension = filename.substr(filename.find_last_of(".") + 1);
-    if (extension == "txt") {
-        isTxtFormat = true;
-        fstream file(filename, ios::in);
-        if (!file.is_open()) {
-            cout << "The file cannot be opened\n";
-            exit(0);
-        }
-        loadTxt(file);
-        file.close();
-    } else {
-        isTxtFormat = false;
-        if (extension == "json") {
-            loadJson(filename);
-        } else if (extension == "yml") {
-            loadYaml(filename);
-        } else {
-            cout << "\033[1mUnsupported file format\033[0m" << endl;
-            exit(0);
-        }
+    
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cout << "The file cannot be opened\n";
+        exit(0);
     }
+
+    if (extension == "txt") {
+        loadTxt(file);
+    } else if (extension == "json") {
+        loadJson(filename);
+    } else if (extension == "yaml") {
+        loadYaml(filename);
+    } else {
+        cout << "\033[1mUnsupported file format\033[0m" << endl;
+        exit(0);
+    }
+
+    file.close();
 }
 
-void Question::loadTxt(fstream& file) {
+
+void Question::loadTxt(ifstream& file) {
     int line_number = (question_number - 1) * 6 + 1;
     int current_number = 1;
     string line;
@@ -117,7 +117,7 @@ string Question::selectFileFormat() {
     map<string, string> formatMap = {
         {"1", "txt"},
         {"2", "json"},
-        {"3", "yml"}
+        {"3", "yaml"}
     };
 
     string format;
