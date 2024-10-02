@@ -23,4 +23,5 @@ public:
     int ask();
     int runQuiz(const string& filename, int numQuestions);
     string selectFileFormat();
+    void validateQuestionData();
 };

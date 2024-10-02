@@ -38,6 +38,7 @@ void Question::loadTxt(fstream& file) {
     int line_number = (question_number - 1) * 6 + 1;
     int current_number = 1;
     string line;
+    bool question_found = false;
 
     while (getline(file, line)) {
         if (current_number == line_number) {
@@ -47,6 +48,7 @@ void Question::loadTxt(fstream& file) {
             } else {
                 contents = line;
             }
+            question_found = true;
         }
         if (current_number >= line_number + 1 && current_number <= line_number + 4) {
             if (line.length() > 2) {
@@ -63,6 +65,12 @@ void Question::loadTxt(fstream& file) {
         }
         current_number++;
     }
+
+    if (!question_found) {
+        throw runtime_error("Question not found in TXT file for question number " + to_string(question_number));
+    }
+
+    validateQuestionData();
 }
 
 
@@ -82,22 +90,27 @@ void Question::loadJson(const string& filename) {
     } else {
         throw runtime_error("Question data not found in JSON file for key " + questionKey);
     }
+
+    validateQuestionData();
 }
 
 
 void Question::loadYaml(const string& filename) {
     YAML::Node yaml = YAML::LoadFile(filename);
-    string questionKey = "Q" + to_string(question_number); // Tworzymy klucz pytania
-    auto q = yaml[questionKey]; // Używamy klucza do dostępu do pytania
+    string questionKey = "Q" + to_string(question_number);
+    auto q = yaml[questionKey];
     if (!q) {
-        throw runtime_error("Question data not found in YAML file");
+        throw runtime_error("Question data not found in YAML file for key " + questionKey);
     }
+
     contents = trim(q["text"].as<string>());
     a = trim(q["answer"][0].as<string>());
     b = trim(q["answer"][1].as<string>());
     c = trim(q["answer"][2].as<string>());
     d = trim(q["answer"][3].as<string>());
     correct_answer = trim(q["correct_answer"].as<string>());
+
+    validateQuestionData();
 }
 
 string Question::selectFileFormat() {
@@ -192,5 +205,11 @@ void Question::check() {
     } else {
      
         point = 0;
+    }
+}
+
+void Question::validateQuestionData() {
+    if (contents.empty() || a.empty() || b.empty() || c.empty() || d.empty() || correct_answer.empty()) {
+        throw runtime_error("Incomplete question data for question number " + to_string(question_number));
     }
 }
