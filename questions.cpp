@@ -12,19 +12,19 @@ using json = nlohmann::json;
 
 void Question::load(const string& filename) {
     const string& extension = filename.substr(filename.find_last_of(".") + 1);
-    
-    ifstream file(filename);
+
+    ifstream file(filename);  // Otwieramy plik raz
     if (!file.is_open()) {
         cout << "The file cannot be opened\n";
         exit(0);
     }
 
     if (extension == "txt") {
-        loadTxt(file);
+        loadTxt(file);  // Przekazujemy strumień do funkcji loadTxt
     } else if (extension == "json") {
-        loadJson(filename);
+        loadJson(file);  // Przekazujemy strumień do funkcji loadJson
     } else if (extension == "yaml") {
-        loadYaml(filename);
+        loadYaml(file);  // Przekazujemy strumień do funkcji loadYaml
     } else {
         cout << "\033[1mUnsupported file format\033[0m" << endl;
         exit(0);
@@ -32,7 +32,6 @@ void Question::load(const string& filename) {
 
     file.close();
 }
-
 
 void Question::loadTxt(ifstream& file) {
     int line_number = (question_number - 1) * 6 + 1;
@@ -74,10 +73,10 @@ void Question::loadTxt(ifstream& file) {
 }
 
 
-void Question::loadJson(const string& filename) {
-    ifstream file(filename);
+void Question::loadJson(ifstream& file) {
     json j;
-    file >> j;  
+    file >> j;  // Wczytujemy dane z przekazanego strumienia
+
     string question_key = "Q" + to_string(question_number);  
     if (j.contains(question_key)) {  
         auto q = j[question_key];  
@@ -94,9 +93,9 @@ void Question::loadJson(const string& filename) {
     validateQuestionData();
 }
 
+void Question::loadYaml(ifstream& file) {
+    YAML::Node yaml = YAML::Load(file);  // Ładujemy YAML bez otwierania pliku na nowo
 
-void Question::loadYaml(const string& filename) {
-    YAML::Node yaml = YAML::LoadFile(filename);
     string question_key = "Q" + to_string(question_number);
     auto q = yaml[question_key];
     if (!q) {

@@ -17,8 +17,8 @@ public:
 
     void load(const string& filename);
     void loadTxt(ifstream& file);
-    void loadJson(const string& filename);
-    void loadYaml(const string& filename);
+    void loadJson(ifstream& file);
+    void loadYaml(ifstream& file);
     void check();
     int ask();
     int runQuiz(const string& filename, int num_questions);
