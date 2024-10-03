@@ -15,8 +15,7 @@ void Question::load(const string& filename) {
 
     ifstream file(filename); 
     if (!file.is_open()) {
-        cout << "The file cannot be opened\n";
-        exit(0);
+        throw runtime_error("The file cannot be opened: " + filename);
     }
 
     if (extension == "txt") {
@@ -26,8 +25,7 @@ void Question::load(const string& filename) {
     } else if (extension == "yaml") {
         loadYaml(file); 
     } else {
-        cout << "\033[1mUnsupported file format\033[0m" << endl;
-        exit(0);
+        throw runtime_error("Unsupported file format: " + extension);
     }
 
     validateQuestionData();
@@ -107,7 +105,7 @@ void Question::loadYaml(ifstream& file) {
     correct_answer = trim(q["correct_answer"].as<string>());
 }
 
-string Question::selectFileFormat() {
+string Question::selectFileFormat() const {
     map<string, string> format_map = {
         {"1", "txt"},
         {"2", "json"},
@@ -124,8 +122,7 @@ string Question::selectFileFormat() {
         format = toLower(format);
 
         if (format == "exit") {
-            cout << "Exiting quiz." << endl;
-            exit(0); 
+            throw runtime_error("Exiting quiz"); 
         }
 
         if (format_map.find(format) != format_map.end()) {
@@ -175,8 +172,7 @@ int Question::ask() {
         answer = toLower(answer);
 
         if (answer == "exit") {
-            cout << "Exiting quiz." << endl;
-            exit(0);  
+            throw runtime_error("Exiting quiz"); 
         }
 
         if (isValidInput(answer)) {

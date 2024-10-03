@@ -11,9 +11,8 @@ using namespace std;
 class Question {
 public:
     string contents, a, b, c, d, answer, correct_answer;
-    int point;
+    int point = 0;
     int question_number;
-    bool isTxtFormat;
 
     void load(const string& filename);
     void loadTxt(ifstream& file);
@@ -22,6 +21,6 @@ public:
     void check();
     int ask();
     int runQuiz(const string& filename, int num_questions);
-    string selectFileFormat();
+    string selectFileFormat() const;
     void validateQuestionData();
 };
