@@ -1,84 +1,84 @@
-1. Type of variable named "double" can hold?
-a integers
-b strings
-c floating-point values
-d characters
-floating-point values
-2. Which command initializes the local repository?
-a git merge
-b git init
-c git add
-d git status
-git init
-3. Which command shows the state of local repository?
-a git merge
-b git init
-c git add
-d git status
-git status
-4. Which command is used to view the list or details of existing committees?
-a git log
-b git show
-c git config
-d git commit
-git log
-5. Which declaration is correct?
-a string car = 'car';
-b 'car' = string car;
-c "car" = string car;
-d string car = "car";
-string car = "car";
-6. Which record is incorrect?
-a int number = 10
-b string car = "car"
-c char number = a
-d double number = 3.3
-char number = a
-7. What is a constructor ?
-a constructor has the same name as the class it belongs to
-b constructor has not the same name as the class it belongs to
-c constructor is called automatically when an object is disposed of
-d constructor is called automatically when a class is created
-constructor has the same name as the class it belongs to
-8. Which command displays the path to the current directory?
-a pwr
-b pwp
-c pwd
-d pwf
-pwd
-9. Which command used to remove files?
-a rm
-b cd
-c wc
-d cut
-rm
-10. Which command adds execute permissions on file to all?
-a chmod 500 <file>
-b chmod r+rw <file>
-c chmod -R 070 <file>
-d chmod a+x <file>
-chmod a+x <file>
-11. Which command lets you view last 20 lines of file?
-a cat 20 <file>
-b touch-end -number 20 <file>
-c endfile -n 20 <file>
-d tail -n 20 <file>
-tail -n 20 <file>
-12. How to view contents of a file?
-a cut <file>
-b less <file>
-c man <file>
-d cmd <file> | wc
-less <file>
-13. How to connect to other machine via ssh (what is the syntax)?
-a ssh-connect <ip-addr>
-b ssh <password> <ip-addr>
-c ssh <user>&&<password>+<ip-addr>
-d ssh <user>@<ip-addr>
-ssh <user>@<ip-addr>
-14. What is curl?
-a utility that lets you format strings
-b utility that lets you send requests 
-c utility that lets you manage windows in Gnome
-d utility to remove old log files
-utility that lets you send requests 
+Q: Type of variable named "double" can hold?
+A: integers
+A: strings
+A: floating-point values
+A: characters
+C: floating-point values
+Q: Which command initializes the local repository?
+A: git merge
+A: git init
+A: git add
+A: git status
+C: git init
+Q: Which command shows the state of local repository?
+A: git merge
+A: git init
+A: git add
+A: git status
+C: git status
+Q: Which command is used to view the list or details of existing committees?
+A: git log
+A: git show
+A: git config
+A: git commit
+C: git log
+Q: Which declaration is correct?
+A: string car = 'car';
+A: 'car' = string car;
+A: "car" = string car;
+A: string car = "car";
+C: string car = "car";
+Q: Which record is incorrect?
+A: int number = 10
+A: string car = "car"
+A: char number = a
+A: double number = 3.3
+C: char number = a
+Q: What is a constructor ?
+A: constructor has the same name as the class it belongs to
+A: constructor has not the same name as the class it belongs to
+A: constructor is called automatically when an object is disposed of
+A: constructor is called automatically when a class is created
+C: constructor has the same name as the class it belongs to
+Q: Which command displays the path to the current directory?
+A: pwr
+A: pwp
+A: pwd
+A: pwf
+C: pwd
+Q: Which command used to remove files?
+A: rm
+A: cd
+A: wc
+A: cut
+C: rm
+Q: Which command adds execute permissions on file to all?
+A: chmod 500 <file>
+A: chmod r+rw <file>
+A: chmod -R 070 <file>
+A: chmod a+x <file>
+C: chmod a+x <file>
+Q: Which command lets you view last 20 lines of file?
+A: cat 20 <file>
+A: touch-end -number 20 <file>
+A: endfile -n 20 <file>
+A: tail -n 20 <file>
+C: tail -n 20 <file>
+Q: How to view contents of a file?
+A: cut <file>
+A: less <file>
+A: man <file>
+A: cmd <file> | wc
+C: less <file>
+Q: How to connect to other machine via ssh (what is the syntax)?
+A: ssh-connect <ip-addr>
+A: ssh <password> <ip-addr>
+A: ssh <user>&&<password>+<ip-addr>
+A: ssh <user>@<ip-addr>
+C: ssh <user>@<ip-addr>
+Q: What is curl?
+A: utility that lets you format strings
+A: utility that lets you send requests 
+A: utility that lets you manage windows in Gnome
+A: utility to remove old log files
+C: utility that lets you send requests 

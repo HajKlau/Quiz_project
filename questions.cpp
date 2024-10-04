@@ -28,7 +28,7 @@ void Question::load(const string &filename)
     {
         loadJson(file);
     }
-    else if (extension == "yaml")
+    else if (extension == "yaml" || extension == "yml")
     {
         loadYaml(file);
     }
@@ -44,52 +44,39 @@ void Question::load(const string &filename)
 
 void Question::loadTxt(ifstream &file)
 {
-    int line_number = (question_number - 1) * 6 + 1;
-    int current_number = 1;
     string line;
     bool question_found = false;
+    vector<string> answers;
 
     while (getline(file, line))
     {
-        if (current_number == line_number)
+        if (line.rfind("Q:", 0) == 0)
         {
-            size_t pos = line.find('.');
-            if (pos != string::npos)
-            {
-                contents = line.substr(pos + 2);
-            }
-            else
-            {
-                contents = line;
-            }
+            contents = line.substr(3);
             question_found = true;
+            answers.clear();
         }
-        if (current_number >= line_number + 1 && current_number <= line_number + 4)
+
+        else if (line.rfind("A:", 0) == 0)
         {
-            if (line.length() > 2)
+            answers.push_back(line.substr(3));
+        }
+
+        else if (line.rfind("C:", 0) == 0)
+        {
+            correct_answer = line.substr(3);
+
+            if (answers.size() != 4)
             {
-                switch (current_number - line_number)
-                {
-                case 1:
-                    a = line.substr(2);
-                    break;
-                case 2:
-                    b = line.substr(2);
-                    break;
-                case 3:
-                    c = line.substr(2);
-                    break;
-                case 4:
-                    d = line.substr(2);
-                    break;
-                }
+                throw runtime_error("Invalid number of answers for question: " + contents);
             }
+
+            a = answers[0];
+            b = answers[1];
+            c = answers[2];
+            d = answers[3];
+            break;
         }
-        if (current_number == line_number + 5)
-        {
-            correct_answer = line;
-        }
-        current_number++;
     }
 
     if (!question_found)
@@ -154,6 +141,7 @@ string Question::selectFileFormat()
             cout << pair.first << ". " << pair.second << endl;
         }
         cin >> format;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         format = toLower(format);
 
         if (format == "exit")
@@ -174,7 +162,7 @@ string Question::selectFileFormat()
 
 int Question::runQuiz(const string &filename, int num_questions)
 {
-    Question q[num_questions];
+    vector<Question> q(num_questions);
     int total_points = 0;
 
     for (int i = 0; i < num_questions; i++)
@@ -206,27 +194,35 @@ int Question::ask()
     {
         cout << endl
              << "Question " << question_number << ": " << contents << endl;
+
         cout << "a) " << a << endl;
         cout << "b) " << b << endl;
         cout << "c) " << c << endl;
         cout << "d) " << d << endl;
-        cout << "---------------------------" << endl;
-        cout << "Enter your answer (a, b, c, or d) or 'exit' to quit: ";
-        cin >> answer;
-        answer = toLower(answer);
 
-        if (answer == "exit")
+        cout << "---------------------------" << endl;
+
+        cout << "Enter your answer (a, b, c, or d) or 'exit' to quit: ";
+        string user_input;
+        getline(cin, user_input);
+        user_input = trim(toLower(user_input));
+
+        if (user_input == "exit")
         {
             throw runtime_error("Exiting quiz");
         }
 
-        if (isValidInput(answer))
+        if (user_input.empty())
         {
-            if (answer_map.find(answer) != answer_map.end())
-            {
-                answer = answer_map[answer];
-                return 1;
-            }
+
+            cout << "\033[1m\033[31mNo answer provided. Please enter a, b, c, or d.\033[0m" << endl;
+            continue;
+        }
+
+        if (user_input.length() == 1 && answer_map.find(user_input) != answer_map.end())
+        {
+            answer = answer_map[user_input];
+            return 1;
         }
 
         cout << endl
@@ -236,7 +232,6 @@ int Question::ask()
 
 void Question::check()
 {
-
     if (trim(answer) == trim(correct_answer))
     {
         cout << "Correct!" << endl;
@@ -244,7 +239,7 @@ void Question::check()
     }
     else
     {
-
+        cout << "Incorrect." << endl;
         point = 0;
     }
 }
