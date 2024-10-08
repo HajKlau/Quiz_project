@@ -20,11 +20,7 @@ void Question::load(const string &filename)
         throw runtime_error("The file cannot be opened: " + filename);
     }
 
-    if (extension == "txt")
-    {
-        loadTxt(file);
-    }
-    else if (extension == "json")
+    if (extension == "json")
     {
         loadJson(file);
     }
@@ -40,49 +36,6 @@ void Question::load(const string &filename)
     validateQuestionData();
 
     file.close();
-}
-
-void Question::loadTxt(ifstream &file)
-{
-    string line;
-    bool question_found = false;
-    vector<string> answers;
-
-    while (getline(file, line))
-    {
-        if (line.rfind("Q:", 0) == 0)
-        {
-            contents = line.substr(3);
-            question_found = true;
-            answers.clear();
-        }
-
-        else if (line.rfind("A:", 0) == 0)
-        {
-            answers.push_back(line.substr(3));
-        }
-
-        else if (line.rfind("C:", 0) == 0)
-        {
-            correct_answer = line.substr(3);
-
-            if (answers.size() != 4)
-            {
-                throw runtime_error("Invalid number of answers for question: " + contents);
-            }
-
-            a = answers[0];
-            b = answers[1];
-            c = answers[2];
-            d = answers[3];
-            break;
-        }
-    }
-
-    if (!question_found)
-    {
-        throw runtime_error("Question not found in TXT file for question number " + to_string(question_number));
-    }
 }
 
 void Question::loadJson(ifstream &file)
@@ -128,14 +81,13 @@ void Question::loadYaml(ifstream &file)
 string Question::selectFileFormat()
 {
     map<string, string> format_map = {
-        {"1", "txt"},
-        {"2", "json"},
-        {"3", "yaml"}};
+        {"1", "json"},
+        {"2", "yaml"}};
 
     string format;
     while (true)
     {
-        cout << "Please select the file format from the list below and enter 1, 2 or 3 or 'exit' to quit: " << endl;
+        cout << "Please select the file format from the list below and enter 1 or 2 or 'exit' to quit: " << endl;
         for (const auto &pair : format_map)
         {
             cout << pair.first << ". " << pair.second << endl;
@@ -143,6 +95,11 @@ string Question::selectFileFormat()
         cin >> format;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         format = toLower(format);
+
+        if (!isValidInput(format))
+        {
+            continue;
+        }
 
         if (format == "exit")
         {
@@ -155,7 +112,7 @@ string Question::selectFileFormat()
         }
         else
         {
-            cout << "\033[1m\033[31mInvalid file format. Please enter '1', '2', '3' or 'exit' to quit.\033[0m" << endl;
+            cout << "\033[1m\033[31mInvalid file format. Please enter '1', '2' or 'exit' to quit.\033[0m" << endl;
         }
     }
 }
@@ -206,6 +163,11 @@ int Question::ask()
         string user_input;
         getline(cin, user_input);
         user_input = trim(toLower(user_input));
+
+        if (!isValidInput(user_input))
+        {
+            continue;
+        }
 
         if (user_input == "exit")
         {

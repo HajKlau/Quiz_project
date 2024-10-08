@@ -16,7 +16,6 @@ public:
     int question_number;
 
     void load(const string &filename);
-    void loadTxt(ifstream &file);
     void loadJson(ifstream &file);
     void loadYaml(ifstream &file);
     void check();
